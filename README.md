@@ -1,53 +1,93 @@
-# Project EarnPlan
+# EarnPlan
 
-Validation MVP for a Bristol-first two-sided micro-project marketplace concept.
+EarnPlan is a UK-focused personal earning planner. It helps people turn an income target, deadline, skills and practical constraints into a ranked, realistic earning plan.
 
 ## Product thesis
 
-**Earners:** set an income goal, skills and availability to generate an EarnPlan.
+Most job boards answer: **What jobs exist?**
 
-**Businesses:** describe an unfinished problem and receive a clearly scoped micro-project recommendation.
+EarnPlan answers: **What is the fastest realistic earning route for me, given my target and constraints?**
 
-The MVP intentionally uses manual matching. We do **not** build marketplace infrastructure until real transactions validate demand.
+UK students are the initial wedge, but the underlying product is a broader personal earning planner.
+
+## Core MVP flow
+
+1. Set an income target.
+2. Choose a deadline and age band.
+3. Add UK location and weekly availability.
+4. Select existing skills and resources.
+5. Add online/local and travel constraints.
+6. Generate 3–5 ranked earning routes using EarnScore.
+7. Follow a concrete action plan.
+
+## EarnScore v1
+
+EarnScore is a deterministic fit score, not a guarantee of work or income.
+
+Current weighting:
+- income fit: 30%
+- accessibility: 25%
+- speed: 20%
+- schedule flexibility: 15%
+- startup friction: 10%
+
+The score is adjusted for skills, age eligibility, equipment/resources, transport, work preference and deadline.
+
+## Initial route catalogue
+
+Current MVP routes include:
+- tutoring
+- campus/university work
+- retail, hospitality and event shifts
+- freelance digital work
+- local business digital help
+- paid research/user studies
+- pet care/local services
+- translation/language support
+
+## Guardrails
+
+EarnPlan must not:
+- imply guaranteed earnings or guaranteed work
+- invent job vacancies
+- recommend work the user is not legally eligible to perform
+- give personalized legal, tax or immigration advice
+- recommend gambling, speculative trading, adult content, dangerous work or get-rich-quick schemes
+
+International students receive an explicit work-rights warning because some visa conditions may restrict hours or prohibit self-employment.
+
+## UK wage configuration
+
+The MVP keeps UK statutory minimum-wage reference values in a small configuration object so they can be updated without changing the scoring architecture.
+
+Current values from April 2026:
+- age 21+: £12.71/hour
+- age 18–20: £10.85/hour
+- age 16–17: £8.00/hour
+
+These are reference values only. Actual pay and legal eligibility depend on the role and circumstances.
 
 ## Validation gate
 
-Primary KPI: **completed paid projects**.
+Do not add marketplace infrastructure, payments, native apps, messaging or complex accounts until the planner itself is validated.
 
-Initial target: **10 completed paid Bristol projects**.
-
-Supporting metrics:
-- business request conversion
-- match acceptance
-- completion rate
-- repeat-business intent
-- average project value
-- platform gross margin
-- manual operating time per match
-
-## Initial packages
-
-1. Content Rescue
-2. Online Presence Fix
-3. Website Quick Fix
-4. Admin / Spreadsheet Rescue
-5. Product / Data Rescue
+Initial validation targets:
+- 50 completed EarnPlans
+- at least 60% planner completion
+- at least 25% of completed users take an action or opportunity step
+- at least 10 users voluntarily leave an email for updates
+- qualitative feedback that recommendations feel specific and useful
 
 ## Current MVP
 
-Static GitHub Pages-ready site:
-- `index.html` — landing page and both funnels
+Static GitHub Pages site:
+- `index.html` — planner-first landing page and results experience
 - `styles.css` — responsive premium UI
-- `script.js` — EarnPlan generator, business package recommender, pilot demo signup
+- `script.js` — EarnScore and route-ranking logic
+- `privacy.html` — privacy information
 
-## Important MVP limitation
+## Current priority
 
-Pilot signup data currently uses browser `localStorage` for demo purposes only. It is **not** a production lead capture system. The next backend milestone is connecting the forms to a secure pilot database and notification workflow.
+P0: validate whether people complete the planner and act on the recommendations.
 
-## Compliance principle
-
-The platform must not imply that every user is eligible for every form of work. Work eligibility must be checked before real matching, particularly where immigration/visa or employment-status restrictions apply.
-
-## Build rule
-
-Do not add payments, messaging, ratings, native apps, complex accounts or automated matching until the 10-paid-project validation gate is reached.
+The next product milestone is lightweight measurement and feedback capture, not marketplace complexity.
