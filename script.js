@@ -1,169 +1,136 @@
-const earnForm = document.getElementById('earn-form');
-const earnResult = document.getElementById('earnplan-result');
-const resultCards = document.getElementById('result-cards');
+const form = document.getElementById('earn-form');
+const results = document.getElementById('results');
+const cards = document.getElementById('result-cards');
 const resultTitle = document.getElementById('result-title');
-const potentialTotal = document.getElementById('potential-total');
-const goalTotal = document.getElementById('goal-total');
+const resultSummary = document.getElementById('result-summary');
+const actionList = document.getElementById('action-list');
+const visaWarning = document.getElementById('visa-warning');
 
-const projectCatalog = [
-  {name:'Content Rescue', value:50, skills:['Social media','Photography','Video','Canva'], time:3, description:'Create a small batch of usable social content for a local business.'},
-  {name:'Online Presence Fix', value:35, skills:['Writing','Social media','Admin'], time:2, description:'Help update and organize public business information and content.'},
-  {name:'Website Quick Fix', value:50, skills:['WordPress','Writing'], time:2, description:'Complete small website copy, image or link updates.'},
-  {name:'Admin Rescue', value:35, skills:['Excel','Admin'], time:2, description:'Clean up a spreadsheet or complete a clearly structured admin task.'},
-  {name:'Product/Data Rescue', value:40, skills:['Excel','Admin','Writing'], time:2, description:'Upload, format or organize product and catalogue information.'},
-  {name:'Menu / Flyer Refresh', value:30, skills:['Canva','Writing'], time:2, description:'Refresh a simple menu, price list or promotional layout.'}
-];
-
-function getSelectedSkills() {
-  return [...document.querySelectorAll('input[name="skills"]:checked')].map(el => el.value);
-}
-
-function buildEarnPlan(goal, skills, hours) {
-  let matches = projectCatalog.filter(project => project.skills.some(skill => skills.includes(skill)));
-  if (!matches.length) matches = projectCatalog.slice(0, 3);
-  matches = matches.sort((a,b) => b.value - a.value);
-
-  const selected = [];
-  let total = 0;
-  let usedHours = 0;
-
-  for (const project of matches) {
-    if (usedHours + project.time <= hours || selected.length === 0) {
-      selected.push(project);
-      total += project.value;
-      usedHours += project.time;
-    }
-    if (total >= goal || selected.length >= 4) break;
-  }
-
-  if (total < goal && selected.length < 4) {
-    for (const project of projectCatalog) {
-      if (!selected.find(item => item.name === project.name) && usedHours + project.time <= hours) {
-        selected.push(project);
-        total += project.value;
-        usedHours += project.time;
-      }
-      if (total >= goal || selected.length >= 4) break;
-    }
-  }
-
-  return {selected, total, usedHours};
-}
-
-earnForm.addEventListener('submit', event => {
-  event.preventDefault();
-  const goal = Number(document.getElementById('goal').value || 0);
-  const skills = getSelectedSkills();
-  const hours = Number(document.getElementById('availability').value || 8);
-  const plan = buildEarnPlan(goal, skills, hours);
-
-  resultTitle.textContent = `Goal: £${goal}`;
-  goalTotal.textContent = `£${goal}`;
-  potentialTotal.textContent = `£${plan.total}`;
-  resultCards.innerHTML = plan.selected.map(project => `
-    <article class="project-card">
-      <span>Typical student pay £${project.value}</span>
-      <h3>${project.name}</h3>
-      <p>${project.description}</p>
-      <p style="margin-top:10px"><strong>Approx. ${project.time} hrs</strong></p>
-    </article>
-  `).join('');
-  earnResult.classList.remove('hidden');
-  earnResult.scrollIntoView({behavior:'smooth', block:'start'});
-});
-
-const businessForm = document.getElementById('business-form');
-const projectResult = document.getElementById('project-result');
-const packageName = document.getElementById('package-name');
-const packagePrice = document.getElementById('package-price');
-const packageSummary = document.getElementById('package-summary');
-const packageDeliverables = document.getElementById('package-deliverables');
-
-const businessPackages = {
-  content: {
-    name:'Content Rescue', price:'£59',
-    summary:'A compact content package for a local business that needs fresh usable material without hiring an agency.',
-    deliverables:['10 usable photos','3 short-form video clips','5 caption drafts','Organized delivery folder']
-  },
-  presence: {
-    name:'Online Presence Fix', price:'£45',
-    summary:'A focused cleanup of public-facing business information and lightweight content preparation.',
-    deliverables:['Profile information audit','Suggested description updates','Photo/content organization','Simple improvement checklist']
-  },
-  website: {
-    name:'Website Quick Fix', price:'£49–£79',
-    summary:'A small website maintenance task with a fixed scope—not a redesign or development project.',
-    deliverables:['Up to 3 small content edits','Image or link replacements','Basic mobile/content check','Completion summary']
-  },
-  admin: {
-    name:'Admin / Spreadsheet Rescue', price:'£39–£59',
-    summary:'A clearly defined admin task for work that keeps sitting at the bottom of the to-do list.',
-    deliverables:['Up to ~2 hours structured admin','Formatting or spreadsheet cleanup','Organized final file','Short handover note']
-  },
-  data: {
-    name:'Product / Data Rescue', price:'£39–£69',
-    summary:'Structured help with repetitive product, catalogue or data maintenance work.',
-    deliverables:['Defined batch of product/data updates','Formatting consistency check','Missing-field flagging','Completion summary']
-  }
+const wageConfig = {
+  '16-17': 8.00,
+  '18-20': 10.85,
+  '21+': 12.71
 };
 
-businessForm.addEventListener('submit', event => {
-  event.preventDefault();
-  const type = document.getElementById('problem-type').value;
-  const pkg = businessPackages[type];
-  packageName.textContent = pkg.name;
-  packagePrice.textContent = pkg.price;
-  packageSummary.textContent = pkg.summary;
-  packageDeliverables.innerHTML = pkg.deliverables.map(item => `<li>${item}</li>`).join('');
-  projectResult.classList.remove('hidden');
-  projectResult.scrollIntoView({behavior:'smooth', block:'start'});
-});
+const routes = [
+  {
+    id:'tutoring', name:'Tutoring', type:'either', age:['16-17','18-20','21+'], skills:['academic','language'],
+    earnings:[12,25], speed:[3,14], startup:0, flexibility:9, access:8, requires:[], selfEmployment:true,
+    actions:['Choose one subject you can confidently teach.','Create a simple one-paragraph offer with level, availability and price range.','Apply through legitimate tutoring channels or ask local schools/university groups where permitted.']
+  },
+  {
+    id:'campus', name:'Campus / university work', type:'local', age:['18-20','21+'], skills:['admin','service','academic'],
+    earnings:[11,16], speed:[5,21], startup:0, flexibility:8, access:8, requires:[], selfEmployment:false,
+    actions:['Check your university careers portal and student union vacancies.','Apply to the 3 best-fit roles today.','Set a reminder to follow up on applications in 5–7 days.']
+  },
+  {
+    id:'hospitality', name:'Retail / hospitality / event shifts', type:'local', age:['16-17','18-20','21+'], skills:['service','practical'],
+    earnings:[8,15], speed:[2,14], startup:0, flexibility:7, access:9, requires:[], selfEmployment:false,
+    actions:['Search nearby retailers, cafés, hotels and event staffing firms.','Prepare a one-page CV focused on reliability and availability.','Apply to at least 5 suitable openings, prioritising roles with immediate starts.']
+  },
+  {
+    id:'freelance', name:'Freelance digital work', type:'online', age:['18-20','21+'], skills:['writing','design','web','video','social','admin','language'],
+    earnings:[12,35], speed:[7,30], startup:0, flexibility:10, access:5, requires:['laptop'], selfEmployment:true,
+    actions:['Pick one narrow service you can deliver in a few hours.','Create one sample or mini-portfolio item.','Pitch 5 relevant small businesses or use a legitimate freelance platform if eligible.']
+  },
+  {
+    id:'localdigital', name:'Local business digital help', type:'either', age:['18-20','21+'], skills:['design','web','social','admin','writing','video'],
+    earnings:[15,40], speed:[3,21], startup:0, flexibility:9, access:6, requires:['phone'], selfEmployment:true,
+    actions:['Choose one clear offer such as menu updates, social content or website fixes.','Find 10 local businesses with an obvious small problem you can solve.','Send 3 personalised offers with a clear fixed scope.']
+  },
+  {
+    id:'research', name:'Paid research / user studies', type:'online', age:['18-20','21+'], skills:[],
+    earnings:[8,25], speed:[2,21], startup:0, flexibility:10, access:5, requires:['phone'], selfEmployment:false,
+    actions:['Register only with reputable research-study providers.','Complete your profile honestly and fully.','Treat this as supplementary income, not a dependable monthly plan.']
+  },
+  {
+    id:'petcare', name:'Pet care / local services', type:'local', age:['18-20','21+'], skills:['practical','service'],
+    earnings:[10,20], speed:[3,14], startup:0, flexibility:8, access:7, requires:[], selfEmployment:true,
+    actions:['Choose one simple local service you can perform safely and reliably.','Start with people or community networks that can verify you.','Agree scope, timing and payment clearly before starting.']
+  },
+  {
+    id:'translation', name:'Translation / language support', type:'online', age:['18-20','21+'], skills:['language','writing'],
+    earnings:[12,30], speed:[5,30], startup:0, flexibility:9, access:6, requires:['laptop'], selfEmployment:true,
+    actions:['Choose the language pair and type of work you can genuinely handle.','Prepare a short sample.','Apply to legitimate translation opportunities or pitch small fixed-scope jobs.']
+  }
+];
 
-const pilotForm = document.getElementById('pilot-form');
-const pilotMessage = document.getElementById('pilot-message');
-const pilotSubmitButton = pilotForm.querySelector('button[type="submit"]');
+function selected(name){ return [...document.querySelectorAll(`input[name="${name}"]:checked`)].map(x=>x.value); }
+function clamp(n,min,max){ return Math.max(min,Math.min(max,n)); }
+function midpoint(range){ return (range[0]+range[1])/2; }
 
-pilotForm.addEventListener('submit', async event => {
-  event.preventDefault();
+function scoreRoute(route, profile){
+  if(!route.age.includes(profile.age)) return {...route, score:35, reality:'red', reason:'Age eligibility may limit this route.'};
+  if(profile.visa && route.selfEmployment) return {...route, score:45, reality:'amber', reason:'Potential visa/work-rights restriction: check your conditions before considering self-employed work.'};
+  if(profile.preference !== 'either' && route.type !== 'either' && route.type !== profile.preference) return {...route, score:48, reality:'amber', reason:`This route does not match your ${profile.preference}-only preference.`};
 
-  const payload = {
-    _subject: 'New EarnPlan Bristol pilot signup',
-    _template: 'table',
-    lead_type: document.getElementById('pilot-type').value,
-    name: document.getElementById('pilot-name').value.trim(),
-    email: document.getElementById('pilot-email').value.trim(),
-    area: document.getElementById('pilot-area').value.trim(),
-    consent: 'Agreed to be contacted about the Bristol pilot',
-    source: 'project-earnplan GitHub Pages',
-    submitted_at: new Date().toISOString()
+  const weeks = Math.max(profile.deadline/7,1);
+  const totalHours = profile.hours * weeks;
+  const hourly = midpoint(route.earnings);
+  const potential = hourly * totalHours;
+  const incomeFit = clamp((potential / Math.max(profile.goal,1))*100, 25, 100);
+
+  const skillMatches = route.skills.length ? route.skills.filter(s=>profile.skills.includes(s)).length : 1;
+  const skillRatio = route.skills.length ? skillMatches/Math.min(route.skills.length,2) : .7;
+  let access = route.access*10;
+  access += skillRatio*18;
+  if(route.requires.every(r=>profile.resources.includes(r))) access += 8;
+  else if(route.requires.length) access -= 18;
+  if(route.type==='local' && profile.transport==='none') access -= 10;
+  access = clamp(access,20,100);
+
+  const speedDays = midpoint(route.speed);
+  const speed = clamp(100 - (speedDays/profile.deadline)*70, 20, 100);
+  const flexibility = route.flexibility*10;
+  const friction = clamp(100 - route.startup*4 - route.requires.filter(r=>!profile.resources.includes(r)).length*25,20,100);
+
+  const score = Math.round(incomeFit*.30 + access*.25 + speed*.20 + flexibility*.15 + friction*.10);
+  let reality = score>=80?'green':score>=60?'amber':'red';
+  const why=[];
+  if(skillMatches) why.push('matches your existing skills');
+  if(speed>=75) why.push('can potentially start relatively quickly');
+  if(route.startup===0) why.push('low startup cost');
+  if(route.type==='either'||route.type===profile.preference||profile.preference==='either') why.push('fits your work preference');
+  const reason = why.length ? why.slice(0,2).join(' and ') : 'possible, but the fit is weaker for your current constraints';
+  return {...route,score,reality,reason};
+}
+
+function moneyRange(route){ return `£${route.earnings[0]}–£${route.earnings[1]}/hr`; }
+function speedRange(route){ return `${route.speed[0]}–${route.speed[1]} days`; }
+function realityLabel(x){ return x==='green'?'Realistic fit':x==='amber'?'Possible / uncertain':'Weak fit'; }
+
+form.addEventListener('submit', e=>{
+  e.preventDefault();
+  const profile={
+    goal:Number(document.getElementById('goal').value||0),
+    deadline:Number(document.getElementById('deadline').value||30),
+    age:document.getElementById('age').value,
+    location:document.getElementById('location').value.trim(),
+    hours:Number(document.getElementById('hours').value||8),
+    skills:selected('skills'),
+    resources:selected('resources'),
+    preference:document.getElementById('preference').value,
+    transport:document.getElementById('transport').value,
+    visa:document.getElementById('visa').checked
   };
 
-  pilotSubmitButton.disabled = true;
-  pilotSubmitButton.textContent = 'Sending…';
-  pilotMessage.textContent = 'Sending your pilot signup…';
+  const ranked=routes.map(r=>scoreRoute(r,profile)).sort((a,b)=>b.score-a.score).slice(0,5);
+  resultTitle.textContent=`£${profile.goal} target · ${profile.deadline} days`;
+  resultSummary.textContent=`Based on ${profile.hours} hours/week in ${profile.location || 'your area'}, here are your strongest current routes.`;
 
-  try {
-    const response = await fetch('https://formsubmit.co/ajax/helloearnplan@protonmail.com', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json'
-      },
-      body: JSON.stringify(payload)
-    });
+  cards.innerHTML=ranked.map((r,i)=>`
+    <article class="route-card">
+      <div class="route-top"><div><span class="rank">#${i+1}</span><h3>${r.name}</h3></div><div class="score score-${r.reality}"><strong>${r.score}</strong><small>EarnScore</small></div></div>
+      <p class="fit-reason">${r.reason.charAt(0).toUpperCase()+r.reason.slice(1)}.</p>
+      <div class="metrics"><div><span>Typical estimate</span><strong>${moneyRange(r)}</strong></div><div><span>Time to first income</span><strong>${speedRange(r)}</strong></div><div><span>Startup cost</span><strong>£${r.startup}</strong></div></div>
+      <div class="reality reality-${r.reality}"><span></span>${realityLabel(r.reality)}</div>
+      <ol>${r.actions.map(a=>`<li>${a}</li>`).join('')}</ol>
+    </article>`).join('');
 
-    if (!response.ok) throw new Error('Submission failed');
+  const top=ranked.slice(0,3);
+  actionList.innerHTML=`<li>Start with <strong>${top[0].name}</strong> today. Complete its first action before researching more options.</li><li>Use <strong>${top[1].name}</strong> as your backup route so your plan does not depend on one opportunity.</li><li>Review progress after 7 days. If there is no traction, shift time toward <strong>${top[2].name}</strong> rather than adding random side hustles.</li>`;
 
-    pilotForm.reset();
-    pilotMessage.textContent = 'Thanks — your pilot signup was sent. If this is the first submission, the EarnPlan inbox must confirm the one-time FormSubmit activation email before leads are forwarded.';
-
-    setTimeout(() => {
-      window.location.href = 'thanks.html';
-    }, 1800);
-  } catch (error) {
-    pilotMessage.textContent = 'We could not send your signup right now. Please try again.';
-  } finally {
-    pilotSubmitButton.disabled = false;
-    pilotSubmitButton.innerHTML = 'Join the pilot <span>→</span>';
-  }
+  visaWarning.classList.toggle('hidden',!profile.visa);
+  results.classList.remove('hidden');
+  results.scrollIntoView({behavior:'smooth',block:'start'});
 });
