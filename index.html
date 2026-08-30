@@ -12,6 +12,7 @@
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
+  <div class="tester-banner"><strong>We’re testing EarnPlan with our first 10 UK users.</strong> Try the planner with your real target and rate the result — no signup required.</div>
   <header class="site-header">
     <a class="brand" href="#top"><span class="brand-mark">E</span><span>EarnPlan</span></a>
     <nav><a href="#planner">Planner</a><a href="#how">How it works</a><a href="#trust">Reality Check</a></nav>
@@ -56,49 +57,14 @@
         <form id="earn-form" class="panel form-panel">
           <div class="progress"><span id="progress-bar"></span></div>
           <div class="form-head"><strong>Your earning target</strong><span>~90 seconds</span></div>
-
           <label><span>How much do you need to earn?</span><div class="money-input"><b>£</b><input id="goal" type="number" min="20" step="10" value="300" required></div></label>
-
-          <div class="two-fields">
-            <label><span>By when?</span><select id="deadline"><option value="7">Within 7 days</option><option value="30" selected>Within 30 days</option><option value="90">Within 90 days</option></select></label>
-            <label><span>Age band</span><select id="age"><option value="16-17">16–17</option><option value="18-20" selected>18–20</option><option value="21+">21+</option></select></label>
-          </div>
-
-          <div class="two-fields">
-            <label><span>UK city / area</span><input id="location" type="text" placeholder="e.g. Manchester" required></label>
-            <label><span>Hours available per week</span><select id="hours"><option value="4">Up to 4</option><option value="8" selected>5–8</option><option value="12">9–12</option><option value="20">13–20</option><option value="30">20+</option></select></label>
-          </div>
-
-          <fieldset>
-            <legend>What can you already do?</legend>
-            <div class="chip-grid">
-              <label class="chip"><input type="checkbox" name="skills" value="academic"><span>Tutoring / academic</span></label>
-              <label class="chip"><input type="checkbox" name="skills" value="writing"><span>Writing</span></label>
-              <label class="chip"><input type="checkbox" name="skills" value="design"><span>Design / Canva</span></label>
-              <label class="chip"><input type="checkbox" name="skills" value="web"><span>Coding / web</span></label>
-              <label class="chip"><input type="checkbox" name="skills" value="video"><span>Video</span></label>
-              <label class="chip"><input type="checkbox" name="skills" value="social"><span>Social media</span></label>
-              <label class="chip"><input type="checkbox" name="skills" value="admin"><span>Admin / Excel</span></label>
-              <label class="chip"><input type="checkbox" name="skills" value="service"><span>Customer service</span></label>
-              <label class="chip"><input type="checkbox" name="skills" value="language"><span>Languages</span></label>
-              <label class="chip"><input type="checkbox" name="skills" value="practical"><span>Practical / local work</span></label>
-            </div>
-          </fieldset>
-
-          <div class="two-fields">
-            <label><span>Work preference</span><select id="preference"><option value="either">Online or local</option><option value="online">Online only</option><option value="local">Local only</option></select></label>
-            <label><span>Travel</span><select id="transport"><option value="none">No transport</option><option value="local" selected>Can travel locally</option><option value="bike">Bicycle</option><option value="car">Car</option></select></label>
-          </div>
-
-          <fieldset><legend>Resources</legend><div class="chip-grid">
-            <label class="chip"><input type="checkbox" name="resources" value="laptop"><span>Laptop</span></label>
-            <label class="chip"><input type="checkbox" name="resources" value="phone"><span>Smartphone</span></label>
-            <label class="chip"><input type="checkbox" name="resources" value="quiet"><span>Quiet workspace</span></label>
-          </div></fieldset>
-
+          <div class="two-fields"><label><span>By when?</span><select id="deadline"><option value="7">Within 7 days</option><option value="30" selected>Within 30 days</option><option value="90">Within 90 days</option></select></label><label><span>Age band</span><select id="age"><option value="16-17">16–17</option><option value="18-20" selected>18–20</option><option value="21+">21+</option></select></label></div>
+          <div class="two-fields"><label><span>UK city / area</span><input id="location" type="text" placeholder="e.g. Manchester" required></label><label><span>Hours available per week</span><select id="hours"><option value="4">Up to 4</option><option value="8" selected>5–8</option><option value="12">9–12</option><option value="20">13–20</option><option value="30">20+</option></select></label></div>
+          <fieldset><legend>What can you already do?</legend><div class="chip-grid"><label class="chip"><input type="checkbox" name="skills" value="academic"><span>Tutoring / academic</span></label><label class="chip"><input type="checkbox" name="skills" value="writing"><span>Writing</span></label><label class="chip"><input type="checkbox" name="skills" value="design"><span>Design / Canva</span></label><label class="chip"><input type="checkbox" name="skills" value="web"><span>Coding / web</span></label><label class="chip"><input type="checkbox" name="skills" value="video"><span>Video</span></label><label class="chip"><input type="checkbox" name="skills" value="social"><span>Social media</span></label><label class="chip"><input type="checkbox" name="skills" value="admin"><span>Admin / Excel</span></label><label class="chip"><input type="checkbox" name="skills" value="service"><span>Customer service</span></label><label class="chip"><input type="checkbox" name="skills" value="language"><span>Languages</span></label><label class="chip"><input type="checkbox" name="skills" value="practical"><span>Practical / local work</span></label></div></fieldset>
+          <div class="two-fields"><label><span>Work preference</span><select id="preference"><option value="either">Online or local</option><option value="online">Online only</option><option value="local">Local only</option></select></label><label><span>Travel</span><select id="transport"><option value="none">No transport</option><option value="local" selected>Can travel locally</option><option value="bike">Bicycle</option><option value="car">Car</option></select></label></div>
+          <fieldset><legend>Resources</legend><div class="chip-grid"><label class="chip"><input type="checkbox" name="resources" value="laptop"><span>Laptop</span></label><label class="chip"><input type="checkbox" name="resources" value="phone"><span>Smartphone</span></label><label class="chip"><input type="checkbox" name="resources" value="quiet"><span>Quiet workspace</span></label></div></fieldset>
           <label class="checkbox-line"><input id="visa" type="checkbox"><span>I am an international student / may have visa work restrictions.</span></label>
           <label class="checkbox-line"><input id="eligibility" type="checkbox" required><span>I understand EarnPlan gives planning information, not guaranteed work, legal, tax or immigration advice.</span></label>
-
           <button class="button primary-button full-button" type="submit">Build my EarnPlan <span>→</span></button>
         </form>
       </div>
@@ -109,17 +75,13 @@
       <div id="result-cards" class="result-grid"></div>
       <div class="action-plan panel"><div><span class="section-number">Your action plan</span><h3>What to do next</h3></div><ol id="action-list"></ol></div>
       <div id="visa-warning" class="warning hidden"><strong>Visa/work-rights check:</strong> Some visa conditions restrict working hours and may prohibit self-employment. Check your own conditions and official UK guidance before accepting work.</div>
+      <div id="feedback-box" class="panel feedback-box"><span class="section-number">First-10 test</span><h3>Was this plan useful?</h3><p>Your answer helps us decide whether EarnPlan is worth improving.</p><div class="feedback-actions"><button type="button" data-feedback="useful">Useful</button><button type="button" data-feedback="somewhat">Somewhat</button><button type="button" data-feedback="not-useful">Not useful</button></div><a id="feedback-email" href="mailto:helloearnplan@protonmail.com?subject=EarnPlan%20tester%20feedback">Tell us what was wrong or missing →</a></div>
       <p class="legal-note">Estimates are indicative only. Earnings, availability and eligibility vary by employer, platform, location and personal circumstances.</p>
     </section>
 
-    <section id="how" class="section-shell how-section">
-      <div class="center-heading"><span class="section-number">How it works</span><h2>Decision support, not job-board noise.</h2></div>
-      <div class="steps-grid"><article><b>01</b><h3>Set the target</h3><p>Start with the amount and deadline that matter to you.</p></article><article><b>02</b><h3>Add constraints</h3><p>Age, hours, skills, travel and work preference change what is realistic.</p></article><article><b>03</b><h3>Get EarnScore</h3><p>Routes are ranked by income fit, accessibility, speed, flexibility and startup friction.</p></article><article><b>04</b><h3>Take action</h3><p>Each route includes clear first steps and a Reality Check.</p></article></div>
-    </section>
-
+    <section id="how" class="section-shell how-section"><div class="center-heading"><span class="section-number">How it works</span><h2>Decision support, not job-board noise.</h2></div><div class="steps-grid"><article><b>01</b><h3>Set the target</h3><p>Start with the amount and deadline that matter to you.</p></article><article><b>02</b><h3>Add constraints</h3><p>Age, hours, skills, travel and work preference change what is realistic.</p></article><article><b>03</b><h3>Get EarnScore</h3><p>Routes are ranked by income fit, accessibility, speed, flexibility and startup friction.</p></article><article><b>04</b><h3>Take action</h3><p>Each route includes clear first steps and a Reality Check.</p></article></div></section>
     <section id="trust" class="trust-section"><div class="section-shell trust-grid"><div><span class="section-number">Reality Check</span><h2>We would rather say “unlikely” than sell you a fantasy.</h2></div><div class="reality-list"><div><span class="dot green"></span><strong>Realistic</strong><p>Accessible, legal and reasonably aligned with your constraints.</p></div><div><span class="dot amber"></span><strong>Difficult / uncertain</strong><p>Possible, but slower, competitive or dependent on conditions outside your control.</p></div><div><span class="dot red"></span><strong>Avoid</strong><p>High-risk, misleading, inappropriate or not suitable for the user's constraints.</p></div></div></div></section>
   </main>
-
   <footer><div class="section-shell footer-inner"><a class="brand" href="#top"><span class="brand-mark">E</span><span>EarnPlan</span></a><p>Planning tool for realistic earning routes.</p><div><a href="privacy.html">Privacy</a><a href="mailto:helloearnplan@protonmail.com">Contact</a></div></div></footer>
   <script src="script.js"></script>
 </body>
