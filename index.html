@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Project EarnPlan helps people turn existing skills and spare time into realistic earning plans, while helping small businesses get clearly scoped micro-projects completed." />
+  <title>Project EarnPlan — Turn skills into an earning plan</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="#top" aria-label="Project EarnPlan home">Project <span>EarnPlan</span></a>
+    <nav>
+      <a href="#how-it-works">How it works</a>
+      <a href="#services">For businesses</a>
+      <a href="#pilot">Bristol pilot</a>
+    </nav>
+  </header>
+
+  <main id="top">
+    <section class="hero section-shell">
+      <div class="eyebrow">Bristol pilot · validation stage</div>
+      <h1>Turn what you can do into a realistic earning plan.</h1>
+      <p class="hero-copy">Set an income goal, tell us your skills and availability, and see the kinds of small paid projects that could fit your week.</p>
+      <div class="choice-grid" aria-label="Choose your path">
+        <a class="choice-card primary" href="#earn">
+          <span class="choice-kicker">I want to earn</span>
+          <strong>Build my EarnPlan</strong>
+          <span>Income goal → skills → availability → plan</span>
+        </a>
+        <a class="choice-card" href="#business">
+          <span class="choice-kicker">I need something done</span>
+          <strong>Scope my project</strong>
+          <span>Problem → clear deliverables → estimated price</span>
+        </a>
+      </div>
+      <p class="trust-note">No fake job listings. No promise of guaranteed earnings. Real opportunities will always be clearly labelled.</p>
+    </section>
+
+    <section id="earn" class="section-shell split-section">
+      <div>
+        <div class="eyebrow">For earners</div>
+        <h2>How much do you want to earn?</h2>
+        <p>We use your target, time and abilities to suggest a practical route. During the pilot, the plan shows typical project values unless a real project is available.</p>
+      </div>
+      <form id="earn-form" class="panel form-panel">
+        <label>
+          Income goal
+          <div class="money-input"><span>£</span><input id="goal" name="goal" type="number" min="20" step="10" value="150" required /></div>
+        </label>
+        <label>
+          By when?
+          <select id="deadline" name="deadline" required>
+            <option value="weekend">This weekend</option>
+            <option value="7days">Within 7 days</option>
+            <option value="month">This month</option>
+          </select>
+        </label>
+        <fieldset>
+          <legend>What can you do?</legend>
+          <div class="chip-grid">
+            <label class="chip"><input type="checkbox" name="skills" value="Canva" /> Canva</label>
+            <label class="chip"><input type="checkbox" name="skills" value="Social media" /> Social media</label>
+            <label class="chip"><input type="checkbox" name="skills" value="Photography" /> Photography</label>
+            <label class="chip"><input type="checkbox" name="skills" value="Video" /> Video</label>
+            <label class="chip"><input type="checkbox" name="skills" value="Excel" /> Excel</label>
+            <label class="chip"><input type="checkbox" name="skills" value="WordPress" /> WordPress</label>
+            <label class="chip"><input type="checkbox" name="skills" value="Writing" /> Writing</label>
+            <label class="chip"><input type="checkbox" name="skills" value="Admin" /> Admin</label>
+          </div>
+        </fieldset>
+        <label>
+          Weekly availability
+          <select id="availability" name="availability" required>
+            <option value="4">Up to 4 hours</option>
+            <option value="8" selected>5–8 hours</option>
+            <option value="12">9–12 hours</option>
+            <option value="20">13+ hours</option>
+          </select>
+        </label>
+        <label>
+          Work area
+          <select id="location" name="location" required>
+            <option value="Bristol">Bristol</option>
+            <option value="Remote">Remote only</option>
+            <option value="Both">Bristol + remote</option>
+          </select>
+        </label>
+        <label class="checkbox-line"><input id="eligibility" type="checkbox" required /> I understand I must only accept work I am legally eligible to perform.</label>
+        <button class="button primary-button" type="submit">Build my EarnPlan</button>
+      </form>
+    </section>
+
+    <section id="earnplan-result" class="section-shell result-section hidden" aria-live="polite">
+      <div class="result-header">
+        <div>
+          <div class="eyebrow">Your first EarnPlan</div>
+          <h2 id="result-title">Goal: £150</h2>
+        </div>
+        <span class="pilot-badge">Pilot estimate</span>
+      </div>
+      <div id="result-cards" class="project-grid"></div>
+      <div class="result-summary panel">
+        <div><span>Typical project value shown</span><strong id="potential-total">£0</strong></div>
+        <div><span>Your goal</span><strong id="goal-total">£0</strong></div>
+        <p>This is a planning estimate, not guaranteed income. We will only mark work “Available now” when a real business request exists.</p>
+      </div>
+      <a class="button secondary-button" href="#pilot">Join the Bristol pilot</a>
+    </section>
+
+    <section id="business" class="section-shell split-section business-section">
+      <div>
+        <div class="eyebrow">For small businesses</div>
+        <h2>What have you been putting off?</h2>
+        <p>Tell us the problem. We turn it into a small, fixed-scope project so you do not have to write a job description or manage a long hiring process.</p>
+      </div>
+      <form id="business-form" class="panel form-panel">
+        <label>
+          What needs doing?
+          <select id="problem-type" required>
+            <option value="content">Social/content</option>
+            <option value="presence">Online presence</option>
+            <option value="website">Website updates</option>
+            <option value="admin">Admin/spreadsheet</option>
+            <option value="data">Product/data work</option>
+          </select>
+        </label>
+        <label>
+          Describe the problem
+          <textarea id="problem" rows="5" placeholder="Example: Our Instagram has not been updated for a month and we need a small batch of usable content." required></textarea>
+        </label>
+        <label>
+          When do you need it?
+          <select id="business-deadline" required>
+            <option>Within 3 days</option>
+            <option>Within 7 days</option>
+            <option>This month</option>
+          </select>
+        </label>
+        <button class="button primary-button" type="submit">Recommend a project</button>
+      </form>
+    </section>
+
+    <section id="project-result" class="section-shell result-section hidden" aria-live="polite">
+      <div class="eyebrow">Recommended micro-project</div>
+      <div class="recommendation panel">
+        <div>
+          <h2 id="package-name">Content Rescue</h2>
+          <p id="package-summary"></p>
+        </div>
+        <div class="price-block"><span>Pilot estimate</span><strong id="package-price">£59</strong></div>
+        <ul id="package-deliverables"></ul>
+        <p class="fine-print">Final scope and price are reviewed before any work begins. No payment is taken through this MVP.</p>
+      </div>
+      <a class="button secondary-button" href="#pilot">Submit this request</a>
+    </section>
+
+    <section id="how-it-works" class="section-shell">
+      <div class="eyebrow">How it works</div>
+      <h2>Small projects, clearly defined.</h2>
+      <div class="steps-grid">
+        <article><span>01</span><h3>Set the goal or problem</h3><p>Earners set an income goal. Businesses tell us what is unfinished.</p></article>
+        <article><span>02</span><h3>We structure it</h3><p>Skills become potential project types. Business problems become fixed deliverables.</p></article>
+        <article><span>03</span><h3>Manual pilot matching</h3><p>During validation, every match is reviewed manually before a project starts.</p></article>
+        <article><span>04</span><h3>Measure real outcomes</h3><p>We only scale after completed paid work proves the model.</p></article>
+      </div>
+    </section>
+
+    <section id="services" class="section-shell">
+      <div class="eyebrow">Initial business packages</div>
+      <h2>Five small outcomes worth testing.</h2>
+      <div class="project-grid services-grid">
+        <article class="project-card"><span>Typical £59</span><h3>Content Rescue</h3><p>Small photo/video/caption package for local businesses.</p></article>
+        <article class="project-card"><span>Typical £45</span><h3>Online Presence Fix</h3><p>Profile cleanup, information updates and content preparation.</p></article>
+        <article class="project-card"><span>Typical £49–£79</span><h3>Website Quick Fix</h3><p>Small copy, image, link or content updates—not a full redesign.</p></article>
+        <article class="project-card"><span>Typical £39–£59</span><h3>Admin Rescue</h3><p>Spreadsheet cleanup, formatting and simple structured admin work.</p></article>
+        <article class="project-card"><span>Typical £39–£69</span><h3>Product/Data Rescue</h3><p>Product uploads, catalogue cleanup and structured data entry.</p></article>
+      </div>
+    </section>
+
+    <section id="pilot" class="section-shell pilot-section">
+      <div>
+        <div class="eyebrow">Bristol validation pilot</div>
+        <h2>Help us prove whether this should exist.</h2>
+        <p>We are validating the model manually before building a full marketplace. The target is 10 genuine completed paid projects.</p>
+      </div>
+      <form id="pilot-form" class="panel form-panel">
+        <label>
+          I am a…
+          <select id="pilot-type" required>
+            <option value="earner">Student / earner</option>
+            <option value="business">Small business</option>
+          </select>
+        </label>
+        <label>Name<input id="pilot-name" type="text" required /></label>
+        <label>Email<input id="pilot-email" type="email" required /></label>
+        <label>Postcode / area<input id="pilot-area" type="text" placeholder="e.g. BS1 or Clifton" /></label>
+        <label class="checkbox-line"><input type="checkbox" required /> I agree to be contacted about the Bristol pilot.</label>
+        <button class="button primary-button" type="submit">Join pilot</button>
+        <p id="pilot-message" class="form-message" aria-live="polite"></p>
+      </form>
+    </section>
+  </main>
+
+  <footer>
+    <strong>Project EarnPlan</strong>
+    <span>Validation MVP · Bristol</span>
+    <span>Not an employment agency. Pilot opportunities are reviewed manually.</span>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
