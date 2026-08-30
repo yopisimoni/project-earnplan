@@ -19,6 +19,7 @@ UK students are the initial wedge, but the underlying product is a broader perso
 5. Add online/local and travel constraints.
 6. Generate 3–5 ranked earning routes using EarnScore.
 7. Follow a concrete action plan.
+8. Rate whether the plan was useful.
 
 ## EarnScore v1
 
@@ -58,36 +59,43 @@ International students receive an explicit work-rights warning because some visa
 
 ## UK wage configuration
 
-The MVP keeps UK statutory minimum-wage reference values in a small configuration object so they can be updated without changing the scoring architecture.
-
-Current values from April 2026:
+Current reference values from April 2026:
 - age 21+: £12.71/hour
 - age 18–20: £10.85/hour
 - age 16–17: £8.00/hour
 
 These are reference values only. Actual pay and legal eligibility depend on the role and circumstances.
 
-## Validation gate
+## First-10 validation
 
-Do not add marketplace infrastructure, payments, native apps, messaging or complex accounts until the planner itself is validated.
+The live site now explicitly recruits the first 10 UK testers and asks for post-plan feedback.
 
-Initial validation targets:
-- 50 completed EarnPlans
-- at least 60% planner completion
-- at least 25% of completed users take an action or opportunity step
-- at least 10 users voluntarily leave an email for updates
+Initial smoke-test pass criteria:
+- at least 8/10 complete the planner
+- at least 6/10 rate it Useful or Somewhat useful
+- at least 3/10 click a recommended action
+- no severe eligibility/safety mismatch
+- no major mobile usability blocker
+
+Recruitment should stay small and targeted. Suitable outreach targets include university careers teams, student employment services and student unions that already help students find part-time work. Do not mass-email or spam communities.
+
+## Full validation target
+
+Before building marketplace infrastructure, prove:
+- 50 completed plans
+- >=60% planner completion
+- >=25% action/opportunity engagement
+- >=10 users voluntarily leave email for updates once a proper opt-in exists
 - qualitative feedback that recommendations feel specific and useful
 
 ## Current MVP
 
 Static GitHub Pages site:
-- `index.html` — planner-first landing page and results experience
+- `index.html` — planner-first landing page, first-10 recruitment banner and results experience
 - `styles.css` — responsive premium UI
-- `script.js` — EarnScore and route-ranking logic
+- `script.js` — EarnScore, route ranking, browser-local measurement and feedback capture
 - `privacy.html` — privacy information
 
 ## Current priority
 
-P0: validate whether people complete the planner and act on the recommendations.
-
-The next product milestone is lightweight measurement and feedback capture, not marketplace complexity.
+P0: run the first-10 validation test. Freeze marketplace, payments, accounts and other product complexity until the test gives a clear signal.
