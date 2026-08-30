@@ -121,20 +121,49 @@ businessForm.addEventListener('submit', event => {
 
 const pilotForm = document.getElementById('pilot-form');
 const pilotMessage = document.getElementById('pilot-message');
-pilotForm.addEventListener('submit', event => {
+const pilotSubmitButton = pilotForm.querySelector('button[type="submit"]');
+
+pilotForm.addEventListener('submit', async event => {
   event.preventDefault();
+
   const payload = {
-    type: document.getElementById('pilot-type').value,
+    _subject: 'New EarnPlan Bristol pilot signup',
+    _template: 'table',
+    lead_type: document.getElementById('pilot-type').value,
     name: document.getElementById('pilot-name').value.trim(),
     email: document.getElementById('pilot-email').value.trim(),
     area: document.getElementById('pilot-area').value.trim(),
-    createdAt: new Date().toISOString()
+    consent: 'Agreed to be contacted about the Bristol pilot',
+    source: 'project-earnplan GitHub Pages',
+    submitted_at: new Date().toISOString()
   };
 
-  const signups = JSON.parse(localStorage.getItem('earnplanPilotSignups') || '[]');
-  signups.push(payload);
-  localStorage.setItem('earnplanPilotSignups', JSON.stringify(signups));
+  pilotSubmitButton.disabled = true;
+  pilotSubmitButton.textContent = 'Sending…';
+  pilotMessage.textContent = 'Sending your pilot signup…';
 
-  pilotMessage.textContent = 'Saved for this MVP demo. Next we will connect this form to the pilot database so submissions reach us.';
-  pilotForm.reset();
+  try {
+    const response = await fetch('https://formsubmit.co/ajax/helloearnplan@protonmail.com', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
+      body: JSON.stringify(payload)
+    });
+
+    if (!response.ok) throw new Error('Submission failed');
+
+    pilotForm.reset();
+    pilotMessage.textContent = 'Thanks — your pilot signup was sent. If this is the first submission, the EarnPlan inbox must confirm the one-time FormSubmit activation email before leads are forwarded.';
+
+    setTimeout(() => {
+      window.location.href = 'thanks.html';
+    }, 1800);
+  } catch (error) {
+    pilotMessage.textContent = 'We could not send your signup right now. Please try again.';
+  } finally {
+    pilotSubmitButton.disabled = false;
+    pilotSubmitButton.innerHTML = 'Join the pilot <span>→</span>';
+  }
 });
